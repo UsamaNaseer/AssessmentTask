@@ -24,8 +24,11 @@ class MoviesListViewModel: ObservableObject {
 }
 
 struct MoviesModel {
-    let id = UUID()
     fileprivate let movie: Movie
+    
+    var id: Int {
+        movie.id
+    }
     
     var title: String {
         movie.originalTitle
@@ -37,5 +40,10 @@ struct MoviesModel {
     
     var urlToImage: URL? {
         URL(string: Constants.Urls.baseImageURL + movie.posterPath)
+    }
+    
+    static var `default`: MoviesModel {
+        let movie = Movie(id: 123, overview: "Hello", originalTitle: "Hi", releaseDate: "12-12-2022", posterPath: "adad/afafaa")
+        return MoviesModel(movie: movie)
     }
 }

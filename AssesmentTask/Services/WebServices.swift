@@ -7,15 +7,8 @@
 
 import Foundation
 
-enum NetworkError: Error {
-    case badUrl
-    case invalidData
-    case decodingError
-}
-
 class Webservice {
     func fetchMovies(url: URL?) async throws -> [Movie] {
-        
         guard let url = url else {
             return []
         }
@@ -24,6 +17,16 @@ class Webservice {
         let moviesResponse = try? JSONDecoder().decode(MoviesListModel.self, from: data)
         
         return moviesResponse?.results ?? []
+    }
+    
+    func fetchMovieDetails(url: URL?) async throws -> Movie? {
+        guard let url = url else {
+            return nil
+        }
         
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let moviesResponse = try? JSONDecoder().decode(Movie.self, from: data)
+        
+        return moviesResponse
     }
 }

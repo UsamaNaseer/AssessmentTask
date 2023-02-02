@@ -13,7 +13,9 @@ struct MoviesListView: View {
     var body: some View {
         NavigationView {
             List(moviesListViewModel.movies, id: \.id) { movie in
-                MovieRowView(moviesModel: movie)
+                NavigationLink(destination: MovieDetailView(movie: movie)) {
+                    MovieRowView(moviesModel: movie)
+                }
             }
             .listStyle(.plain)
             .task({
